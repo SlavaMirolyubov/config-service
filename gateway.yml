@@ -1,0 +1,23 @@
+server:
+  port: 8079
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: monolith
+          uri: lb://monolith
+          predicates:
+            - Path=/cart/**, /order/**
+
+        - id: productService
+          uri: lb://product-service
+          predicates:
+            - Path=/group/**, /product/**
